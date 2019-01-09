@@ -7,7 +7,7 @@ Tests for neoconf.py
 import unittest
 import os
 import warnings
-from neoconf.neoconf import Neo4jConfigReader
+from neoconf.neoconf import Neo4jConfigReader, ConfigLine
 
 class Neo4jConfigReaderTestCase(unittest.TestCase):
     
@@ -66,3 +66,11 @@ class Neo4jConfigReaderTestCase(unittest.TestCase):
             reader = Neo4jConfigReader(f)
             self.assertRaises(ValueError, reader.get_setting, 
                               "dbms.active_database")
+
+class ConfigLineTestCase(unittest.TestCase):
+    
+    def test_error_thrown_if_status_invalid(self):
+        """Should throw error is status isn't either active or commented."""
+        self.assertRaises(ValueError, ConfigLine, "BAD_STATUS", "whatever",
+                          "whatever")
+        
