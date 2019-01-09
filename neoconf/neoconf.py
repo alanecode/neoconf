@@ -35,6 +35,7 @@ environment variavles)
 
 """
 import re
+import warnings
 
 class ConfigLine(object):
     
@@ -126,8 +127,9 @@ class Neo4jConfigReader(object):
             return active_matches[0].setting_value
         else:
             if setting_name == "dbms.active_database":
-                print("WARNING: No value for dbms.active_database specified " \
-                      "in config file. Assumed to be default value graph.db.")
+                warnings.warn("No value for dbms.active_database specified " \
+                              "in config file. Assumed to be default value "\
+                              "graph.db.", UserWarning)
                 return "graph.db"
             else:
                 raise ValueError("No setting for " + setting_name + 
